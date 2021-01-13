@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        
+    </div>
+
+</body>
+
+<script>
+
+    //  欢迎进入vue元编程的世界
+    var app = new Vue({
+        el: '#app',
+        data: {
+            msg: 'aaa',
+            a:'',
+            b:'',
+        },
+
+ //method方法
+        methods: {
+            submit() {
+                console.log('我来到了submit里面')
+            },
+
+            d() {
+                console.log('进入d里面了')
+            },
+            num1() {
+                console.log('我进入num1里面了')  
+            }
+        },
+
+//Vue计算属性
+       computed:{
+           full(){
+               return this.a+' '+this.b
+           }
+
+       },
+
+//vue监听
+       watch:{
+            firstName:function(value){
+                this.fullName2=value+' '+this.lastName
+            }
+       },
+
+
+//生命周期:
+        // 这是生命周期函数 beforeCreate  
+        //创建之前  new 操作部署能力过程中 还没全部准备完成
+        beforeCreate() {
+            console.log('我进入了生命周期函数beforeCreate里面')
+            console.log(this.data)
+
+
+        },
+        // 这是生命周期函数 created
+        //创建之后  data methods 已经部署完成 
+        created() {
+           
+            axios({
+                url: 'http://localhost:5001/vuestudy',
+                method: 'get',
+                params: {
+                    username: 'zs',
+                }
+            }).then(response => {
+                console.log(response)
+              
+            }).catch(error => {
+                console.log(error)
+            })
+            console.log('我进入了生命周期created')
+           
+        },
+        //虽然created数据已经架构完成 但是没经过算法和dom元素的比对和插入
+        //中间  有算法 要dom比对和插入   数据渲染之前   基本已经准备好了 就等最后给 页面了
+        // 这一步 是不是可以做 再最后检查下数据是不是对  不对 马上变
+        beforeMount() {
+                 //这是axios的get请求
+           
+
+            console.log('我进入beforeMount了')
+            console.log(this.fruits)
+            this.d()
+            if (this.msg = 'aaa') {
+                this.msg = '这才是正确的数据'
+            }
+
+        },
+        // 数据  data methods 都拿到了  数据也到了 dom元素 页面上了  
+        mounted() {
+            console.log('进入mounted里面了')
+            //这是axios的get请求
+            // axios({
+            //     url: 'http://localhost:5001/vuestudy',
+            //     method: 'get',
+            //     params: {
+            //         username: 'zs',
+
+
+            //     }
+            // }).then(response => {
+            //     console.log(response)
+            //     console.log(response.data[0].username)
+            //     this.username = response.data[0].username
+
+
+            // }).catch(error => {
+            //     console.log(error)
+            // })
+
+
+
+            // 学习axios 的post 请求
+            // axios({
+            //     url: 'http://localhost:5001/vuestudy',
+            //     method: 'post',
+            //     data: {
+            //         username: 'zs',
+            //         password: '123456'
+            //     }
+            // }).then(response => {
+            //     console.log(response)
+            // }).catch(error => {
+            //     console.log(error)
+            // })
+
+
+        },
+        //数据更新前
+        beforeUpdate() {
+            console.log('我进入beforeUpdate')
+        },
+        //数据更新后
+        updated() {
+            console.log('我进入updated')
+        },
+        //页面销毁之前
+        beforeDestroy() {
+            console.log('页面销毁之前')
+        },
+        //页面销毁之后
+        destroyed() {
+
+
+            console.log('页面销毁之后')
+        }
+
+    })
+
+    console.log(app)
+
+</script>
+
+</html>

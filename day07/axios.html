@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script type="text/javascript" src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    #app div {
+      margin-left: 350px;
+    }
+
+    button {
+      margin: 20px 0px 0px 20px;
+      color: sienna;
+    }
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    td,
+    th {
+      padding: 0;
+    }
+
+    .pure-table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      empty-cells: show;
+      border: 1px solid #aab8d1;
+    }
+
+    .pure-table caption {
+      color: #000;
+      font: italic 85%/1 arial, sans-serif;
+      padding: 1em 0;
+      text-align: center;
+    }
+
+    .pure-table td,
+    .pure-table th {
+      border-left: 1px solid #cbcbcb;
+      border-width: 0 0 0 1px;
+      font-size: inherit;
+      margin: 0;
+      overflow: visible;
+      padding: .5em 1em;
+    }
+
+    .pure-table thead {
+      background-color: #e0e0e0;
+      color: #000;
+      text-align: left;
+      vertical-align: bottom;
+    }
+
+    .pure-table td {
+      background-color: transparent;
+    }
+
+    .pure-table-bordered td {
+      border-bottom: 1px solid #cbcbcb;
+    }
+
+    .pure-table-bordered tbody>tr:last-child>td {
+      border-bottom-width: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <button @click='click'>点击有惊喜</button>
+    <div>
+      <table class="pure-table pure-table-horizontal" v-show='active'>
+        <thead>
+          <tr>
+            <th>用户名</td>
+            <th>密码</td>
+            <th>年龄</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for='(item,index) in arr' :key="item._id">
+            <td>
+              {{item.name}}
+            </td>
+            <td>
+              {{item.pwd}}
+            </td>
+            <td>
+              {{item.age}}
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+  </div>
+</body>
+
+</html>
+<script>
+
+  var app = new Vue({
+    el: '#app',
+    data: {
+      active: false,
+      arr: []
+    },
+    created() {
+
+      axios({
+        url: 'http://localhost:9002/users',
+        method: 'get',
+      }).then(response => {
+        console.log(111, response.data.data);
+        this.arr = response.data.data
+        // this.arr = response.data
+        // console.log(this.arr);
+
+      }).catch(error => {
+        console.log(error)
+      })
+
+    },
+    methods: {
+      click() {
+        this.active = !this.active
+
+      }
+
+    }
+  })
+</script>

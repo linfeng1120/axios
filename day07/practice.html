@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div v-for="item in arr" :key="item.id">
+            <h1>{{item}}</h1>
+          </div>
+          <button @click="add">add</button>
+    </div>
+</body>
+</html>
+<script>
+    var app=new Vue({
+        el:'#app',
+        data:{
+            arr: [
+            {
+              id: 1,
+              fruit: "苹果",
+            },
+            {
+              id: 2,
+              fruit: "香蕉",
+            },
+            {
+              id: 3,
+              fruit: "橙子",
+            },
+          ],
+        },
+        methods:{
+            add(){
+                var obj={
+                    id:2,
+                    fruit:'香蕉',
+                    color:'黄色香蕉'
+                }
+                this.arr.splice(1,1,obj)
+            }
+        }
+    })
+</script>
